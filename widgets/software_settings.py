@@ -1,6 +1,5 @@
-import webbrowser
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QLabel, QPushButton, QMessageBox,
-                             QHBoxLayout)
+                             QHBoxLayout, QDialog)
 from PyQt5.QtCore import Qt
 
 
@@ -35,13 +34,6 @@ class SettingsWidget(QWidget):
         info_layout.addWidget(QLabel(f"版本号: Beta0.1"))
         info_layout.addWidget(QLabel(f"作者: @JasonShane"))
         
-        # Github按钮
-        github_btn = QPushButton("Github仓库")
-        github_btn.setStyleSheet("color: #0066cc; text-decoration: underline; background: none; border: none;")
-        github_btn.setCursor(Qt.PointingHandCursor)
-        github_btn.clicked.connect(self.show_github_confirmation)
-        info_layout.addWidget(github_btn)
-
         info_layout.addWidget(QLabel(f"© {2025} 版权所有"))
 
         # 添加到主布局
@@ -52,6 +44,14 @@ class SettingsWidget(QWidget):
 
         # 重置按钮区域
         reset_layout = QHBoxLayout()
+        # 添加检查更新按钮
+        check_update_btn = QPushButton("检查更新")
+        check_update_btn.setStyleSheet("padding: 8px 16px; background-color: #f0f0f0;")
+        check_update_btn.clicked.connect(self.show_check_update_dialog)
+        reset_layout.addWidget(check_update_btn)
+        # 添加间距
+        reset_layout.addSpacing(10)
+        # 添加重置按钮
         reset_button = QPushButton("重置软件")
         reset_button.setStyleSheet("padding: 8px 16px; background-color: #f0f0f0;")
         reset_button.clicked.connect(self.show_reset_confirmation)
@@ -62,19 +62,6 @@ class SettingsWidget(QWidget):
         main_layout.addLayout(reset_layout)
 
         self.setLayout(main_layout)
-
-    def show_github_confirmation(self):
-        """显示访问Github确认对话框"""
-        reply = QMessageBox.question(
-            self,
-            "访问Github",
-            "是否打开浏览器访问项目Github页面？",
-            QMessageBox.Yes | QMessageBox.No,
-            QMessageBox.No
-        )
-
-        if reply == QMessageBox.Yes:
-            webbrowser.open("https://github.com/xJasonShane/StarRail-Team-Assistant")
 
     def show_reset_confirmation(self):
         """显示重置软件确认对话框"""
@@ -89,3 +76,10 @@ class SettingsWidget(QWidget):
         if reply == QMessageBox.Yes:
             # 这里将在后续实现实际的重置逻辑
             QMessageBox.information(self, "提示", "软件已重置为初始状态")
+
+    def show_check_update_dialog(self):
+        """显示检查更新对话框（空白页面占位）"""
+        dialog = QDialog(self)
+        dialog.setWindowTitle("检查更新")
+        dialog.resize(300, 200)
+        dialog.exec_()
