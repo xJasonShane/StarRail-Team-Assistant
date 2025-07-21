@@ -54,4 +54,36 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import traceback
+    import sys
+    try:
+        # 确保日志目录存在
+        import os
+        log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')
+        os.makedirs(log_dir, exist_ok=True)
+        log_file = os.path.join(log_dir, 'app_startup.log')
+        
+        def log(message):
+            """同时输出到控制台和日志文件"""
+            print(message)
+            with open(log_file, 'a', encoding='utf-8') as f:
+                f.write(message + '\n')
+        
+        log("开始启动应用程序...")
+        log("初始化QApplication...")
+        app = QApplication(sys.argv)
+        log("创建主窗口...")
+        window = MainWindow()
+        log("显示主窗口...")
+        window.show()
+        log("启动应用程序事件循环...")
+        sys.exit(app.exec_())
+    except Exception as e:
+        error_msg = f"程序启动失败: {str(e)}"
+        stack_trace = traceback.format_exc()
+        log(error_msg)
+        log("错误堆栈:\n" + stack_trace)
+        # 同时写入标准错误流
+        print(error_msg, file=sys.stderr)
+        print("错误堆栈:\n" + stack_trace, file=sys.stderr)
+        sys.exit(1)
