@@ -1,5 +1,5 @@
 import sys
-import webbrowser
+
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout,
                              QDesktopWidget, QLabel, QPushButton, QMessageBox, QHBoxLayout)
 from PyQt5.QtCore import Qt

@@ -1,5 +1,5 @@
 import requests
-import json
+
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QLabel, QPushButton, QMessageBox,
                              QHBoxLayout, QDialog)
 from PyQt5.QtCore import Qt
@@ -12,7 +12,7 @@ class SettingsWidget(QWidget):
     """
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.current_version = "1.0.0"
+
         self.init_ui()
 
     def init_ui(self):
