@@ -3,6 +3,7 @@ import sys
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout,
                              QDesktopWidget, QLabel, QPushButton, QMessageBox, QHBoxLayout)
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont, QPalette, QColor
 
 
 from widgets.team_config import TeamConfigWidget
@@ -18,9 +19,10 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("StarRail Team Assistant")
-        self.resize(800, 600)  # 设置初始大小而非固定几何尺寸
+        self.resize(1000, 700)  # 增大默认窗口尺寸
         self.setMinimumSize(600, 450)  # 添加最小尺寸限制
         self.center_window()
+        self.setup_styles()
         self.init_ui()
 
     def center_window(self):
@@ -29,6 +31,100 @@ class MainWindow(QMainWindow):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+
+    def setup_styles(self):
+        """设置应用程序样式表实现现代化界面风格"""
+        self.setStyleSheet(""
+            # 全局样式
+            "QWidget {"
+                "font-family: 'Inter', 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;"
+                "font-size: 15px;"
+                "color: #333333;"
+                "background-color: #f8f9fa;"
+            "}"
+
+            # 主窗口样式
+            "QMainWindow {"
+                "background-color: #f0f2f5;"
+            "}"
+
+            # 标签页控件样式
+            "QTabWidget::pane {"
+                "border: 1px solid #dee2e6;"
+                "border-radius: 8px;"
+                "background-color: #ffffff;"
+                "margin: 10px;"
+            "}"
+            "QTabBar::tab {"
+                "background-color: #e9ecef;"
+                "color: #495057;"
+                "border: none;"
+                "border-top-left-radius: 6px;"
+                "border-top-right-radius: 6px;"
+                "padding: 10px 20px;"
+                "margin-right: 2px;"
+                "min-width: 120px;"
+                "height: 36px;"
+                "font-size: 16px;"
+            "}"
+            "QTabBar::tab:selected {"
+                "background-color: #ffffff;"
+                "color: #212529;"
+                "font-weight: 500;"
+                "border-top: 2px solid #6c5ce7;"
+            "}"
+            "QTabBar::tab:hover:!selected {"
+                "background-color: #dee2e6;"
+            "}"
+
+            # 按钮样式
+            "QPushButton {"
+                "background-color: #6c5ce7;"
+                "color: white;"
+                "border: none;"
+                "border-radius: 6px;"
+                "padding: 8px 16px;"
+                "font-weight: 500;"
+                "font-size: 15px;"
+                "min-height: 36px;"
+            "}"
+            "QPushButton:hover {"
+                "background-color: #5d4fc7;"
+            "}"
+            "QPushButton:pressed {"
+                "background-color: #4a3fc7;"
+            "}"
+            "QPushButton:disabled {"
+                "background-color: #6c757d;"
+                "color: #ffffff;"
+            "}"
+
+            # 标签样式
+            "QLabel {"
+                "color: #212529;"
+            "}"
+            "QLabel#titleLabel {"
+                "font-size: 24px;"
+                "font-weight: bold;"
+                "color: #6c5ce7;"
+            "}"
+            "QLabel#subtitleLabel {"
+                "font-size: 17px;"
+                "color: #6c757d;"
+            "}"
+
+            # 消息框样式
+            "QMessageBox {"
+                "background-color: #ffffff;"
+                "border-radius: 8px;"
+            "}"
+            "QMessageBox QLabel {"
+                "color: #212529;"
+            "}"
+            "QMessageBox QPushButton {"
+                "min-width: 80px;"
+            "}"
+        "")
 
     def init_ui(self):
         """初始化主窗口UI元素"""

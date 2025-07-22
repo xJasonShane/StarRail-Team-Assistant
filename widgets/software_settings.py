@@ -2,6 +2,7 @@ import requests
 
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QLabel, QPushButton, QMessageBox,
                              QHBoxLayout, QDialog)
+import webbrowser
 from PyQt5.QtCore import Qt
 
 
@@ -50,14 +51,14 @@ class SettingsWidget(QWidget):
         reset_layout = QHBoxLayout()
         # 添加检查更新按钮
         check_update_btn = QPushButton("检查更新")
-        check_update_btn.setStyleSheet("padding: 8px 16px; background-color: #f0f0f0;")
+        check_update_btn.setStyleSheet("padding: 8px 16px;")
         check_update_btn.clicked.connect(self.show_check_update_dialog)
         reset_layout.addWidget(check_update_btn)
         # 添加间距
         reset_layout.addSpacing(10)
         # 添加重置按钮
         reset_button = QPushButton("重置软件")
-        reset_button.setStyleSheet("padding: 8px 16px; background-color: #f0f0f0;")
+        reset_button.setStyleSheet("padding: 8px 16px; background-color: #dfe6e9;")
         reset_button.clicked.connect(self.show_reset_confirmation)
         reset_layout.addWidget(reset_button)
         reset_layout.setAlignment(Qt.AlignCenter)
@@ -131,20 +132,10 @@ class SettingsWidget(QWidget):
         """检查更新并显示结果对话框"""
         print("开始检查更新流程")
         try:
-            # 显示加载提示
-            loading_dialog = QDialog(self)
-            loading_dialog.setWindowTitle("检查更新")
-            loading_dialog.resize(200, 100)
-            layout = QVBoxLayout()
-            layout.addWidget(QLabel("正在检查更新..."))
-            loading_dialog.setLayout(layout)
-            loading_dialog.show()
-
             # 获取最新版本
             print("正在获取最新版本号...")
             latest_version = self.get_latest_version()
             print(f"获取到最新版本号: {latest_version}")
-            loading_dialog.close()
 
             # 处理检查结果
             if not latest_version:
@@ -166,7 +157,6 @@ class SettingsWidget(QWidget):
                     QMessageBox.Yes
                 )
                 if reply == QMessageBox.Yes:
-                    import webbrowser
                     webbrowser.open("https://github.com/xJasonShane/StarRail-Team-Assistant/releases")
             else:
                 QMessageBox.information(self, "已是最新版本", f"当前版本 {current_version} 已是最新版本。")
